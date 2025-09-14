@@ -41,7 +41,7 @@ export default function Products({ products, categories }: ProductsProps) {
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
             }`}
           >
-            All Products
+            {t('allProducts')}
           </button>
           {categories.map(category => (
             <button
