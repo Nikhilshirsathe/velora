@@ -2,6 +2,7 @@ import { GetServerSideProps } from 'next'
 import { useState } from 'react'
 import ProductCard from '@/components/ProductCard'
 import { prisma } from '@/lib/prisma'
+import { useT } from '@/lib/i18n'
 
 interface Product {
   id: string
@@ -20,14 +21,15 @@ interface ProductsProps {
 
 export default function Products({ products, categories }: ProductsProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
-  
-  const filteredProducts = selectedCategory === 'all' 
-    ? products 
+  const t = useT()
+
+  const filteredProducts = selectedCategory === 'all'
+    ? products
     : products.filter(product => product.category === selectedCategory)
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">All Products</h1>
+      <h1 className="text-3xl font-bold text-gray-900 mb-8">{t('allProducts')}</h1>
 
       <div className="mb-8">
         <div className="flex flex-wrap gap-2">
@@ -39,7 +41,7 @@ export default function Products({ products, categories }: ProductsProps) {
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
             }`}
           >
-            All Products
+            {t('allProducts')}
           </button>
           {categories.map(category => (
             <button
@@ -65,7 +67,7 @@ export default function Products({ products, categories }: ProductsProps) {
 
       {filteredProducts.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-gray-500 text-lg">No products found.</p>
+          <p className="text-gray-500 text-lg">{t('noProducts')}</p>
         </div>
       )}
     </div>

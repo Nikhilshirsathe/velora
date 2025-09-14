@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(401).json({ message: 'Unauthorized' })
     }
 
-    const { name, description, price, image, category, stock } = req.body
+    const { name, description, price, image, category, stock, packSize } = req.body
 
     if (!name || !price || !category) {
       return res.status(400).json({ message: 'Name, price, and category are required' })
@@ -31,10 +31,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         data: {
           name,
           description,
-          price: parseFloat(price),
+          price: typeof price === 'string' ? parseFloat(price) : price,
           image,
           category,
-          stock: parseInt(stock) || 0,
+          stock: typeof stock === 'string' ? parseInt(stock) : (stock ?? 0),
+          packSize,
         }
       })
       res.status(201).json(product)
