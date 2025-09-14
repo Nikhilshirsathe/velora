@@ -6,28 +6,33 @@ async function main() {
   const nameEn = 'The Natural Solution';
   const image = 'https://cdn.builder.io/api/v1/image/assets%2F3880e7df42a1416f9d1ed52d003b6955%2F3ff4733277b94c4abbb0036fb99bceb8?format=webp&width=800';
 
-  const product = await prisma.product.upsert({
-    where: { name: nameEn },
-    update: {
-      price: 500,
-      image,
-      category: 'healthcare',
-      stock: 100,
-      packSize: '30 Tablets',
-      description: 'Herbal tablets formulated with Guggul, Shallaki, Rasna, Ashwagandha, Hadjod & Zinc. Helps strengthen bones, muscles, joints & ligaments. Relieves pain and inflammation in arthritis and joint disorders.',
-    },
-    create: {
-      name: nameEn,
-      description: 'Herbal tablets formulated with Guggul, Shallaki, Rasna, Ashwagandha, Hadjod & Zinc. Helps strengthen bones, muscles, joints & ligaments. Relieves pain and inflammation in arthritis and joint disorders.',
-      price: 500,
-      image,
-      category: 'healthcare',
-      stock: 100,
-      packSize: '30 Tablets',
-    }
-  });
+  let product = await prisma.product.findFirst({ where: { name: nameEn } });
+  if (product) {
+    product = await prisma.product.update({
+      where: { id: product.id },
+      data: {
+        price: 500,
+        image,
+        category: 'healthcare',
+        stock: 100,
+        packSize: '30 Tablets',
+        description: 'Herbal tablets formulated with Guggul, Shallaki, Rasna, Ashwagandha, Hadjod & Zinc. Helps strengthen bones, muscles, joints & ligaments. Relieves pain and inflammation in arthritis and joint disorders.',
+      },
+    });
+  } else {
+    product = await prisma.product.create({
+      data: {
+        name: nameEn,
+        description: 'Herbal tablets formulated with Guggul, Shallaki, Rasna, Ashwagandha, Hadjod & Zinc. Helps strengthen bones, muscles, joints & ligaments. Relieves pain and inflammation in arthritis and joint disorders.',
+        price: 500,
+        image,
+        category: 'healthcare',
+        stock: 100,
+        packSize: '30 Tablets',
+      },
+    });
+  }
 
-  // Upsert translations
   const translations = [
     {
       locale: 'en',
@@ -42,16 +47,24 @@ async function main() {
     {
       locale: 'mr',
       name: 'द नैचरल सोल्यूशन',
-      description: 'गुग्गुळ, शल्लकी, रास्ना, अश्वगंधा, हडजोड व झिंक युक्त हर्बल टॅबलेट. हाडे, स्नायू व सांधे मजबूत करायला मदत करते. संधिवात व सांध्यातील वेदना- सूज कमी करण्यास उपयुक्त.'
+      description: 'गुग्गुळ, शल्लकी, रास्ना, अश्वगंधा, हडजोड व झिंक युक्त हर्बल टॅबलेट. हाडे, स्नायू व सांधे म���बूत करायला मदत करते. संधिवात व सांध्यातील वेदना- सूज कमी करण्यास उपयुक्त.'
     }
   ];
 
   for (const tr of translations) {
-    await prisma.productTranslation.upsert({
+    const existing = await prisma.productTranslation.findUnique({
       where: { productId_locale: { productId: product.id, locale: tr.locale } },
-      update: { name: tr.name, description: tr.description },
-      create: { productId: product.id, locale: tr.locale, name: tr.name, description: tr.description }
     });
+    if (existing) {
+      await prisma.productTranslation.update({
+        where: { id: existing.id },
+        data: { name: tr.name, description: tr.description },
+      });
+    } else {
+      await prisma.productTranslation.create({
+        data: { productId: product.id, locale: tr.locale, name: tr.name, description: tr.description },
+      });
+    }
   }
 
   console.log('Product created/updated:', product.id);
