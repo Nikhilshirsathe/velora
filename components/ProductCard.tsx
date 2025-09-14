@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { useCartStore } from '@/lib/store'
 import toast from 'react-hot-toast'
 import { useT } from '@/lib/i18n'
@@ -41,14 +42,15 @@ export default function ProductCard({ product }: ProductCardProps) {
     <div className="bg-white border border-gray-200 rounded-lg hover:shadow-lg transition-all duration-200 p-4 group">
       <div className="relative mb-3">
         <div className="relative h-48 bg-gray-50 rounded-lg overflow-hidden">
-          <a href={`/products/${product.id}`} aria-label="View details">
+          <Link href={`/products/${product.id}`} aria-label="View details" className="block relative h-full">
             <Image
               src={product.image || 'https://via.placeholder.com/300x200'}
               alt={product.name}
               fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
               className="object-contain group-hover:scale-105 transition-transform duration-200"
             />
-          </a>
+          </Link>
         </div>
       </div>
 
