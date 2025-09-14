@@ -2,6 +2,7 @@ import { GetServerSideProps } from 'next'
 import { useState } from 'react'
 import ProductCard from '@/components/ProductCard'
 import { prisma } from '@/lib/prisma'
+import { useT } from '@/lib/i18n'
 
 interface Product {
   id: string
