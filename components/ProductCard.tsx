@@ -53,7 +53,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <span className="text-lg font-bold text-gray-900">₹{product.price}</span>
-          <span className="text-sm text-gray-700">{t('qty')}: {product.stock}</span>
+          <span className="text-sm text-gray-700">{t('qty')}: {product.packSize ?? `${product.stock}`}</span>
         </div>
 
         <div className="pt-2">
