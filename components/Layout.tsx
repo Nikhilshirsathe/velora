@@ -31,7 +31,7 @@ export default function Layout({ children }: LayoutProps) {
             </div>
             
             <div className="flex items-center space-x-4">
-              <div className="hidden sm:flex items-center space-x-2 bg-gray-100 rounded-full p-1">
+              <div className="flex items-center space-x-2 bg-gray-100 rounded-full p-1">
                 {(['en','hi','mr'] as const).map(l => (
                   <button
                     key={l}
