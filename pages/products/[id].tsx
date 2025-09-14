@@ -51,7 +51,6 @@ export default function ProductDetails({ product }: Props) {
           <Image src={product.image || 'https://via.placeholder.com/600x400'} alt={name} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-contain" />
         </div>
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900 mb-2">{name}</h1>
           <div className="flex items-center space-x-4 mb-4">
             <span className="text-2xl font-bold">₹{product.price}</span>
             {product.packSize && <span className="text-gray-600">{product.packSize}</span>}
