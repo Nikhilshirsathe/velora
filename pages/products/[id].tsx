@@ -48,7 +48,7 @@ export default function ProductDetails({ product }: Props) {
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="relative h-72 md:h-96 bg-white border rounded-lg overflow-hidden">
-          <Image src={product.image || 'https://via.placeholder.com/600x400'} alt={name} fill className="object-contain" />
+          <Image src={product.image || 'https://via.placeholder.com/600x400'} alt={name} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-contain" />
         </div>
         <div>
           <h1 className="text-2xl font-semibold text-gray-900 mb-2">{name}</h1>
