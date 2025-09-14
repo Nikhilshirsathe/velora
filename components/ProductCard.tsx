@@ -41,12 +41,14 @@ export default function ProductCard({ product }: ProductCardProps) {
     <div className="bg-white border border-gray-200 rounded-lg hover:shadow-lg transition-all duration-200 p-4 group">
       <div className="relative mb-3">
         <div className="relative h-48 bg-gray-50 rounded-lg overflow-hidden">
-          <Image
-            src={product.image || 'https://via.placeholder.com/300x200'}
-            alt={product.name}
-            fill
-            className="object-contain group-hover:scale-105 transition-transform duration-200"
-          />
+          <a href={`/products/${product.id}`} aria-label="View details">
+            <Image
+              src={product.image || 'https://via.placeholder.com/300x200'}
+              alt={product.name}
+              fill
+              className="object-contain group-hover:scale-105 transition-transform duration-200"
+            />
+          </a>
         </div>
       </div>
 
