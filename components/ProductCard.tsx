@@ -11,6 +11,7 @@ interface Product {
   image?: string
   category: string
   stock: number
+  packSize?: string | null
 }
 
 interface ProductCardProps {
