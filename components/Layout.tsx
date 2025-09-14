@@ -15,6 +15,7 @@ export default function Layout({ children }: LayoutProps) {
   const totalItems = useCartStore(state => state.getTotalItems())
   const router = useRouter()
   const switchLocale = (locale: string) => {
+    if (router.locale === locale) return
     router.push(router.asPath, router.asPath, { locale })
   }
 
@@ -30,10 +31,17 @@ export default function Layout({ children }: LayoutProps) {
             </div>
             
             <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-1">
-                <button onClick={() => switchLocale('en')} className="px-2 py-1 text-sm hover:underline">EN</button>
-                <button onClick={() => switchLocale('hi')} className="px-2 py-1 text-sm hover:underline">हिं</button>
-                <button onClick={() => switchLocale('mr')} className="px-2 py-1 text-sm hover:underline">म्रा</button>
+              <div className="hidden sm:flex items-center space-x-2 bg-gray-100 rounded-full p-1">
+                {(['en','hi','mr'] as const).map(l => (
+                  <button
+                    key={l}
+                    onClick={() => switchLocale(l)}
+                    aria-current={router.locale === l}
+                    className={`px-3 py-1.5 text-sm rounded-full transition-colors border ${router.locale === l ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'}`}
+                  >
+                    {l === 'en' ? 'EN' : l === 'hi' ? 'हिं' : 'म्रा'}
+                  </button>
+                ))}
               </div>
               <Link href="/cart" className="relative p-2">
                 <ShoppingCartIcon className="h-6 w-6" />
