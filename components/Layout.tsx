@@ -2,8 +2,9 @@ import { ReactNode } from 'react'
 import { useSession, signOut } from 'next-auth/react'
 import Link from 'next/link'
 import { useCartStore } from '@/lib/store'
-import { ShoppingCartIcon, UserIcon, MagnifyingGlassIcon, BellIcon } from '@heroicons/react/24/outline'
+import { ShoppingCartIcon } from '@heroicons/react/24/outline'
 import Sidebar from './Sidebar'
+import { useRouter } from 'next/router'
 
 interface LayoutProps {
   children: ReactNode
@@ -12,6 +13,10 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   const { data: session } = useSession()
   const totalItems = useCartStore(state => state.getTotalItems())
+  const router = useRouter()
+  const switchLocale = (locale: string) => {
+    router.push(router.asPath, router.asPath, { locale })
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -25,6 +30,11 @@ export default function Layout({ children }: LayoutProps) {
             </div>
             
             <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-1">
+                <button onClick={() => switchLocale('en')} className="px-2 py-1 text-sm hover:underline">EN</button>
+                <button onClick={() => switchLocale('hi')} className="px-2 py-1 text-sm hover:underline">हिं</button>
+                <button onClick={() => switchLocale('mr')} className="px-2 py-1 text-sm hover:underline">म्रा</button>
+              </div>
               <Link href="/cart" className="relative p-2">
                 <ShoppingCartIcon className="h-6 w-6" />
                 {totalItems > 0 && (
@@ -33,7 +43,7 @@ export default function Layout({ children }: LayoutProps) {
                   </span>
                 )}
               </Link>
-              
+
               {session ? (
                 <div className="flex items-center space-x-4">
                   {session.user.role === 'ADMIN' && (
