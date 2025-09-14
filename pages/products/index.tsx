@@ -67,7 +67,7 @@ export default function Products({ products, categories }: ProductsProps) {
 
       {filteredProducts.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-gray-500 text-lg">No products found.</p>
+          <p className="text-gray-500 text-lg">{t('noProducts')}</p>
         </div>
       )}
     </div>
