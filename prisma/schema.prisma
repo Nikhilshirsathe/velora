@@ -26,6 +26,7 @@ model Product {
   image        String?
   category     String
   stock        Int                  @default(0)
+  packSize     String?
   createdAt    DateTime             @default(now())
   updatedAt    DateTime             @updatedAt
   orderItems   OrderItem[]
