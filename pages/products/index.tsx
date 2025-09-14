@@ -21,14 +21,15 @@ interface ProductsProps {
 
 export default function Products({ products, categories }: ProductsProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
-  
-  const filteredProducts = selectedCategory === 'all' 
-    ? products 
+  const t = useT()
+
+  const filteredProducts = selectedCategory === 'all'
+    ? products
     : products.filter(product => product.category === selectedCategory)
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">All Products</h1>
+      <h1 className="text-3xl font-bold text-gray-900 mb-8">{t('allProducts')}</h1>
 
       <div className="mb-8">
         <div className="flex flex-wrap gap-2">
