@@ -1,0 +1,12 @@
+{
+  "name": "Velora",
+  "short_name": "Velora",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "serviceworker": {
+    "src": "/sw.js",
+    "scope": "/"
+  }
+}
